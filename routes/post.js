@@ -1,7 +1,5 @@
 const PostController = require("../controllers/post");
 const PostMiddleware = require("../middleware/post");
-// const Joi = require("joi");
-// Joi.objectId = require("joi-objectid")(Joi);
 
 class PostRouter {
   constructor(app) {
@@ -10,7 +8,7 @@ class PostRouter {
     this.middleware = new PostMiddleware();
   }
 
-  async configs() {
+  configs() {
     // ALL POSTS
     this.app.get("/posts", this.controller.getAllPosts);
 
@@ -19,6 +17,13 @@ class PostRouter {
       "/posts/:id",
       this.middleware.checkObjectId,
       this.controller.getSinglePost
+    );
+
+    // CREATE POST
+    this.app.post(
+      "/posts",
+      this.middleware.validateCreatePost,
+      this.controller.createPost
     );
   }
 }

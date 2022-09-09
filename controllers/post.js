@@ -19,7 +19,24 @@ class PostController {
       return (ctx.body = { message: "Invalid Post ID" });
     }
     ctx.status = 200;
-    return (ctx.body = { message: "Single Post Retreive Serves" });
+    return (ctx.body = { post });
+  }
+
+  async createPost(ctx) {
+    const { title, description, author } = ctx.request.body;
+    const isTitleTaken = await PostModel.findOne({ title })
+      .select("_id")
+      .lean();
+    if (isTitleTaken) {
+      ctx.status = 400;
+      ctx.body = { message: "This Title is already Taken" };
+      return ctx;
+    }
+    const newPost = new PostModel({ title, description, author });
+    await newPost.save();
+    ctx.status = 201;
+    ctx.body = { message: "Post Create Successfully", post: newPost };
+    return ctx;
   }
 }
 

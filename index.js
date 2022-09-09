@@ -4,11 +4,13 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const koaJSON = require("koa-json");
 const PostsRouter = require("./routes/post");
+const koaBodyParser = require("koa-bodyparser");
 
 const app = new Koa();
 const router = new KoaRouter({ prefix: "/api", sensitive: true });
 
 app.use(koaJSON());
+app.use(koaBodyParser());
 
 new PostsRouter(router).configs();
 
