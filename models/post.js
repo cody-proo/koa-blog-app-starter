@@ -11,7 +11,8 @@ const schema = new mongoose.Schema({
   },
   author: {
     required: true,
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
   },
   poster: {
     required: false,
