@@ -1,4 +1,5 @@
 const PostController = require("../controllers/post");
+const AuthMiddleware = require("../middleware/auth");
 const PostMiddleware = require("../middleware/post");
 
 class PostRouter {
@@ -6,6 +7,7 @@ class PostRouter {
     this.app = app;
     this.controller = new PostController();
     this.middleware = new PostMiddleware();
+    this.authMiddleware = new AuthMiddleware();
   }
 
   configs() {
@@ -22,6 +24,7 @@ class PostRouter {
     // CREATE POST
     this.app.post(
       "/posts",
+      this.authMiddleware.checkAuth,
       this.middleware.validateCreatePost,
       this.controller.createPost
     );

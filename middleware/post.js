@@ -34,12 +34,6 @@ class PostMiddleware extends BaseMiddleware {
         "string.min": "Your Description Must Contain AtLeast 3 Character",
         "any.required": "You Must Complete Your Description",
       }),
-      author: Joi.string().min(3).required().messages({
-        "string.required": "Complete Your Author",
-        "string.base": "Author Must Be Text",
-        "string.min": "Your Author Must Contain AtLeast 3 Character",
-        "any.required": "You Must Complete Your Author",
-      }),
     });
 
     const createPostValidateErr = PostMiddleware.checkError(
@@ -58,7 +52,6 @@ class PostMiddleware extends BaseMiddleware {
 
     return next();
   }
-
 }
 
 module.exports = PostMiddleware;
