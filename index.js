@@ -4,6 +4,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const koaJSON = require("koa-json");
 const PostsRouter = require("./routes/post");
+const UsersRouter = require("./routes/user");
 const koaBodyParser = require("koa-bodyparser");
 
 const app = new Koa();
@@ -13,6 +14,7 @@ app.use(koaJSON());
 app.use(koaBodyParser());
 
 new PostsRouter(router).configs();
+new UsersRouter(router).configs();
 
 app.use(router.routes()).use(router.allowedMethods());
 

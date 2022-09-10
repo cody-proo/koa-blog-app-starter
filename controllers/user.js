@@ -5,12 +5,15 @@ const jwt = require("jsonwebtoken");
 class UserController {
   async login(ctx) {
     const { email, password } = ctx.request.body;
-    const user = await UserModel.findOne({ email }).select("email").lean();
+    const user = await UserModel.findOne({ email })
+      .select("email password")
+      .lean();
     if (!user) {
       ctx.status = 404;
       ctx.body = { message: "User Not Found" };
       return ctx;
     }
+    console.log(user);
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       ctx.status = 404;
